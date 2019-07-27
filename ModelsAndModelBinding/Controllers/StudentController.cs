@@ -22,6 +22,7 @@ namespace ModelsAndModelBinding.Controllers
         {
             // Validate input ( lots of work)
             // Server-side and client-side
+            // Add error messages on page to notify user
 
             Student stu = new Student()
             {
@@ -32,6 +33,7 @@ namespace ModelsAndModelBinding.Controllers
             };
 
             //Add to database
+
             return View();
         }
 
@@ -49,6 +51,15 @@ namespace ModelsAndModelBinding.Controllers
         [HttpPost]
         public IActionResult RegisterMB(Student s)
         {
+            //This verifies all data annotations in the class are valid
+            if (ModelState.IsValid)
+            {
+                //Add to database
+                StudentDB.Register(s);
+                //Display success message
+                ViewData["Success"] = "Student was succesfully registered";
+                return View();
+            }
             return View();
         }
     }
